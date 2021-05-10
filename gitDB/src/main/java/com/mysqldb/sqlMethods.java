@@ -3,14 +3,14 @@ package com.mysqldb;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-public class Main {
+public class sqlMethods {
     static final String DB_URL = "jdbc:mysql://localhost:3306/gitDB";
     static final String USER = "developer0";
     static final String PASS = "Azielsolomon123";
     public static List<String> ip = new ArrayList<>();
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/gitDB";
 
-    public String createTable(String username) {
+    public void createTable(String username) {
         Connection connection = null;
         try {
             // create a database connection
@@ -32,7 +32,6 @@ public class Main {
             }
         }
 
-        return "Table already exists";
     }
 
     public void insertPerson(int userAge, String userFirstName, String userLastName, String userIpAddress, String userLocation) throws SQLException {
@@ -60,17 +59,18 @@ public class Main {
         return conn;
     }
 
-    public void deletePerson() throws ClassNotFoundException, SQLException {
+    public String deletePerson(String givenTable) throws ClassNotFoundException, SQLException {
         // Open a connection
         try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gitDB", "developer0", "Azielsolomon123");
             Statement stmt = conn.createStatement();
         ) {
-            String sql = "DROP TABLE Person";
+            String sql = "DROP TABLE "+givenTable+"";
             stmt.executeUpdate(sql);
-            System.out.println("Table deleted in given database...");
+            return "Table deleted in given database...";
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public int fetchAge() {
@@ -213,6 +213,8 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+
 
     
 }
